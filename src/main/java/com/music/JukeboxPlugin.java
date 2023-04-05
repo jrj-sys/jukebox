@@ -11,10 +11,14 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Jukebox"
+	name = "Jukebox",
+	description = "A jukebox plugin for Runescape music.",
+	tags = {"music"},
+	loadWhenOutdated = true
 )
 public class JukeboxPlugin extends Plugin
 {
@@ -24,16 +28,20 @@ public class JukeboxPlugin extends Plugin
 	@Inject
 	private JukeboxConfig config;
 
+	@Inject private JukeBoxOverlay overlay;
+
+	@Inject private OverlayManager overlayManager;
+
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("Jukebox started!");
+		overlayManager.add(overlay);
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("Jukebox stopped!");
+		overlayManager.remove(overlay);
 	}
 
 	@Subscribe
@@ -41,7 +49,7 @@ public class JukeboxPlugin extends Plugin
 	{
 		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
 		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Jukebox says " + config.greeting(), null);
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "", null);
 		}
 	}
 

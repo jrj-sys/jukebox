@@ -4,16 +4,17 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
-@ConfigGroup("example")
+@ConfigGroup("jukebox")
 public interface JukeboxConfig extends Config
 {
 	@ConfigItem(
-		keyName = "testKey",
-		name = "Jukebox",
-		description = "The message to show to the user when they login"
+		position = 1,
+		keyName = "playMusic",
+		name = "Play Music",
+		description = "Toggle the Jukebox music"
 	)
-	default String greeting()
+	default boolean playMusic()
 	{
-		return "The beginning of Jukebox!";
+		return false;
 	}
 }
